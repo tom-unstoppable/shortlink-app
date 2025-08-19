@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    ports:
+      - "4567:4567"
+    environment:
+      - RACK_ENV=development
+      - BASE_URL=http://localhost:4567
+      - REDIS_URL=redis://redis:6379/1
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    networks:
+      - shortlink-network
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - shortlink-network
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  shortlink-network:
+    driver: bridge

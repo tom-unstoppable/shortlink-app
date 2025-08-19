@@ -1,0 +1,57 @@
+# Dependencies
+/vendor/
+/bundle/
+
+# Database
+# Redis data files
+
+# Redis
+dump.rdb
+*.aof
+
+# Logs
+*.log
+/logs/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Coverage reports
+/coverage/
+
+# RSpec
+.rspec_status
+
+# Node modules (if any frontend is added later)
+node_modules/
+
+# Build artifacts
+/dist/
+/build/
+
+# Docker
+.dockerignore
+docker-compose.override.yml

@@ -1,0 +1,25 @@
+FROM ruby:3.4.4-alpine
+
+RUN apk add --no-cache \
+    build-base \
+    tzdata
+
+WORKDIR /app
+
+RUN gem install bundler -v 2.6.9
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle _2.6.9_ install --jobs 4 --retry 3
+
+COPY . .
+
+EXPOSE 4567
+
+ENV RACK_ENV=development
+ENV BASE_URL=http://localhost:4567
+ENV REDIS_URL=redis://redis:6379
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:4567/ || exit 1
+
+CMD ["ruby", "app.rb"]

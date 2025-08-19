@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: shortlink-app
+    env: ruby
+    plan: free
+    buildCommand: bundle install
+    startCommand: bundle exec rackup --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: RACK_ENV
+        value: production
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: shortlink-redis
+          property: connectionString
+      - key: BASE_URL
+        value: https://$RENDER_EXTERNAL_HOSTNAME
+
+  - type: redis
+    name: shortlink-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
